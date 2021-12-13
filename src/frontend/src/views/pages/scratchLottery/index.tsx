@@ -35,8 +35,7 @@ const Index : FC<ScratchLotteryProp> = (prop: ScratchLotteryProp) => {
         methodName:'RevealedCard',
         onReceived: m => setRevealedCard(m)
     });
-    // TO DO rename the variable and complete the build and run process//
-    const [readOnly, setReadOnly]   = useState<boolean>(false);
+    const [isPlayerParticipated, setIsPlayerParticipated]   = useState<boolean>(false);
     const [showPrice, setShowPrice] = useState<boolean>(false);
     const [wonPrice, setWonPrice] = useState<string | null>(null);
     const [error, setError] = useState<string>('');
@@ -53,8 +52,8 @@ const Index : FC<ScratchLotteryProp> = (prop: ScratchLotteryProp) => {
                 wonPrice: p.wonPrice
             }));
             setCards(items);
-            const playerAlreadyPlayed = items.filter((p:any) => p.playerName?.toUpperCase() === prop.playerName.toUpperCase()).length > 0;
-            setReadOnly(playerAlreadyPlayed);
+            const isParticipated = items.filter((p:any) => p.playerName?.toUpperCase() === prop.playerName.toUpperCase()).length > 0;
+            setIsPlayerParticipated(isParticipated);
         }
 
         if (revealedCard){
@@ -85,7 +84,7 @@ const Index : FC<ScratchLotteryProp> = (prop: ScratchLotteryProp) => {
     }
 
     const _onPriceDialogClose = ():void =>{
-        setReadOnly(true);
+        setIsPlayerParticipated(true);
         setShowPrice(false);
     }
 
@@ -123,7 +122,7 @@ const Index : FC<ScratchLotteryProp> = (prop: ScratchLotteryProp) => {
                                 playerName={card.playerName} 
                                 wonPrice={card.wonPrice} 
                                 onCardReveal={_cardReveal}
-                                readOnly={readOnly}
+                                readOnly={isPlayerParticipated}
                             />)}
                     </Grid>
                 </Grid>
@@ -138,7 +137,7 @@ const Index : FC<ScratchLotteryProp> = (prop: ScratchLotteryProp) => {
                 <Alert severity="warning">{error}!</Alert>
             </Snackbar>
             <Snackbar 
-                open={readOnly} 
+                open={isPlayerParticipated} 
                 autoHideDuration={6000}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
