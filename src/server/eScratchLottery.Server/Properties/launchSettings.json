@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "eScratchLottery.Server": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "eSL_WwwRoot": "../../frontend/build"
+      }
+    }
+  }
+}
